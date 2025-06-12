@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SzépségSzalon</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>SzépségSzalon</h1>
+    <nav>
+      <a href="#rolunk">Rólunk</a>
+      <a href="#szolgaltatasok">Szolgáltatások</a>
+      <a href="#munkaink">Munkáink</a>
+      <a href="#foglalas">Időpontfoglalás</a>
+      <a href="#kapcsolat">Kapcsolat</a>
+    </nav>
+  </header>
+
+  <section id="rolunk">
+    <h2>Üdvözlünk!</h2>
+    <p>Stílus, profizmus és barátságos légkör. Válassz minket, ha modern vagy klasszikus frizurára vágysz!</p>
+    <img src="https://via.placeholder.com/600x300?text=Szalon+kép" alt="Szalon" />
+  </section>
+
+  <section id="szolgaltatasok">
+    <h2>Szolgáltatások</h2>
+    <ul>
+      <li>Férfi hajvágás – 4.000 Ft</li>
+      <li>Női hajvágás – 6.000 Ft</li>
+      <li>Hajfestés – 8.000 Ft-tól</li>
+      <li>Esküvői frizurák – egyéni ajánlat alapján</li>
+    </ul>
+  </section>
+
+  <section id="munkaink">
+    <h2>Saját munkáink</h2>
+    <div class="gallery">
+      <img src="https://via.placeholder.com/200x200?text=Frizura+1" alt="Frizura 1" />
+      <img src="https://via.placeholder.com/200x200?text=Frizura+2" alt="Frizura 2" />
+      <img src="https://via.placeholder.com/200x200?text=Frizura+3" alt="Frizura 3" />
+      <img src="https://via.placeholder.com/200x200?text=Frizura+4" alt="Frizura 4" />
+    </div>
+  </section>
+
+  <section id="foglalas">
+    <h2>Időpontfoglalás</h2>
+    <form action="https://formsubmit.co/hajbeni1@gmail.com" method="POST">
+      <input type="hidden" name="_captcha" value="false">
+
+      <label for="name">Név:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="phone">Telefonszám:</label>
+      <input type="tel" id="phone" name="phone" required />
+
+      <label for="date">Dátum:</label>
+      <input type="date" id="date" name="date" required />
+
+      <label for="service">Szolgáltatás:</label>
+      <select id="service" name="service" required>
+        <option value="">-- Válassz --</option>
+        <option value="ferfi">Férfi hajvágás</option>
+        <option value="noi">Női hajvágás</option>
+        <option value="festes">Hajfestés</option>
+        <option value="eskuvoi">Esküvői frizura</option>
+      </select>
+
+      <button type="submit">Időpont foglalása</button>
+    </form>
+    <p class="note">Az űrlap elküldi az adatokat e-mailben neked.</p>
+  </section>
+
+  <section id="kapcsolat">
+    <h2>Kapcsolat</h2>
+    <p>Cím: 1234 Budapest, Fő utca 1.</p>
+    <p>Telefon: <a href="tel:+3612345678">+36 1 234 5678</a></p>
+    <p>Email: <a href="mailto:info@szepsegszalon.hu">info@szepsegszalon.hu</a></p>
+    <p><a href="https://www.google.com/maps" target="_blank">Térkép megtekintése</a></p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 SzépségSzalon. Minden jog fenntartva.</p>
+  </footer>
+</body>
+</html>
