@@ -45,47 +45,87 @@
   </section>
 
   <section id="foglalas">
-    <h2>Időpontfoglalás</h2>
-    <form action="https://formsubmit.co/hajbeni1@gmail.com" method="POST">
-      <input type="hidden" name="_captcha" value="false">
+      <h1>Időpontfoglalás</h1>
+  <form id="booking-form">
+    <label for="name">Név:</label>
+    <input type="text" id="name" name="name" required />
 
-      <label for="name">Név:</label>
-      <input type="text" id="name" name="name" required />
+    <label for="phone">Telefonszám:</label>
+    <input type="tel" id="phone" name="phone" required />
 
-      <label for="phone">Telefonszám:</label>
-      <input type="tel" id="phone" name="phone" required />
+    <label for="style">Frizura típusa:</label>
+    <textarea id="style" name="style" rows="2" required></textarea>
 
-      <label for="date">Dátum:</label>
-      <input type="date" id="date" name="date" required />
+    <label for="slot">Választható időpont:</label>
+    <select id="slot" name="slot" required>
+      <option value="">Betöltés...</option>
+    </select>
 
-      <label for="time">Időpont:</label>
-      <select id="time" name="time" required>
-        <option value="">-- Válassz --</option>
-        <option value="08:00">08:00</option>
-        <option value="08:30">08:30</option>
-        <option value="09:00">09:00</option>
-        <option value="09:30">09:30</option>
-        <option value="10:00">10:00</option>
-        <option value="10:30">10:30</option>
-        <option value="11:00">11:00</option>
-        <option value="11:30">11:30</option>
-        <option value="12:00">12:00</option>
-        <option value="12:30">12:30</option>
-        <option value="13:00">13:00</option>
-        <option value="13:30">13:30</option>
-        <option value="14:00">14:00</option>
-        <option value="14:30">14:30</option>
-        <option value="15:00">15:00</option>
-        <option value="15:30">15:30</option>
-      </select>
+    <button type="submit">Foglalás</button>
+    <div id="message"></div>
+  </form>
 
-      <label for="service">Szolgáltatás:</label>
-      <select id="service" name="service" required>
-        <option value="">-- Válassz --</option>
-        <option value="ferfi">Férfi hajvágás</option>
-        <option value="noi">Női hajvágás</option>
-        <option value="festes">Hajfestés</option>
-        <option value="eskuvoi">Esküvői frizura</option>
+  <script>
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbz1P4xtuLLbKpZ8zyjK5WRqM1FSa2YhtKK_IGjbPsAhHe0j53gnW7hbfyrDkx3xIIY/exec';
+
+    function generateTimeSlots(start = 8, end = 16, interval = 30) {
+      const slots = [];
+      for (let h = start; h < end; h++) {
+        for (let m = 0; m < 60; m += interval) {
+          const hh = h.toString().padStart(2, '0');
+          const mm = m.toString().padStart(2, '0');
+          slots.push(`${hh}:${mm}`);
+        }
+      }
+      return slots;
+    }
+
+    async function loadSlots() {
+      const res = await fetch(apiUrl);
+      const data = await res.json();
+      const booked = new Set(data.booked);
+      const select = document.getElementById("slot");
+      select.innerHTML = "";
+      generateTimeSlots().forEach(slot => {
+        if (!booked.has(slot)) {
+          const option = document.createElement("option");
+          option.value = slot;
+          option.textContent = slot;
+          select.appendChild(option);
+        }
+      });
+    }
+
+    document.getElementById("booking-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const style = document.getElementById("style").value.trim();
+      const slot = document.getElementById("slot").value;
+      const message = document.getElementById("message");
+      message.textContent = "";
+      message.className = "";
+
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        body: JSON.stringify({ name, phone, style, slot }),
+        headers: { "Content-Type": "application/json" }
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        message.textContent = "Sikeres foglalás!";
+        message.className = "success";
+        loadSlots();
+        document.getElementById("booking-form").reset();
+      } else {
+        message.textContent = "Ez az időpont már foglalt.";
+        message.className = "error";
+      }
+    });
+
+    loadSlots();
+  </script>
       </select>
 
       <button type="submit">Időpont foglalása</button>
